@@ -40,31 +40,36 @@ void menu_change(int i_selected){
 
         break;
       case 2:
-          text_layer_set_text(s_menuButton[0], "Vokabel");
+          i_inMenu = i_selected;
+          vocMixer(i_inMenu);
+          /*text_layer_set_text(s_menuButton[0], "Vokabel");
           text_layer_set_text(s_menuButton[1], "Pinyin 1");
           text_layer_set_text(s_menuButton[2], "Pinyin 2");
           text_layer_set_text(s_menuButton[3], "Pinyin 3");
           text_layer_set_text_alignment(s_menuButton[4], GTextAlignmentCenter);
           text_layer_set_text(s_menuButton[4], "Score: 0");
-          i_inMenu = i_selected;
+          i_inMenu = i_selected;*/
         break;
       case 3:
-          text_layer_set_text(s_menuButton[0], "Pinyin");
+          i_inMenu = i_selected;
+          vocMixer(i_inMenu);
+          /*text_layer_set_text(s_menuButton[0], "Pinyin");
           text_layer_set_text(s_menuButton[1], "Vokabel 1");
           text_layer_set_text(s_menuButton[2], "Vokabel 2");
           text_layer_set_text(s_menuButton[3], "Vokabel 3");
           text_layer_set_text_alignment(s_menuButton[4], GTextAlignmentCenter);
-          text_layer_set_text(s_menuButton[4], "Score: 0");
-          i_inMenu = i_selected;    
+          text_layer_set_text(s_menuButton[4], "Score: 0");*/
+      
         break;
       case 4:
+          i_inMenu = i_selected;
           text_layer_set_text(s_menuButton[0], "Language");
           text_layer_set_text(s_menuButton[1], "Lists");
           text_layer_set_text(s_menuButton[2], "Scope");
           text_layer_set_text(s_menuButton[3], "Method");
           text_layer_set_text(s_menuButton[4], "<- back");
-          i_inMenu = i_selected;
         break;
+  
       default:
           text_layer_set_text(s_menuButton[0], "X->简化字");
           text_layer_set_text(s_menuButton[1], "简化字->X");
@@ -125,10 +130,22 @@ void menu_change(int i_selected){
     }
   }
   
+  else if(i_inMenu < 4)
+  {
+    i_inMenu = i_selected;
+    text_layer_set_text(s_menuButton[0], "Statistic:");
+    getScore();       //Zahl richtiger Antworten
+    getOverall();
+    //text_layer_set_text(s_menuButton[1], "简化字->X");
+    //text_layer_set_text(s_menuButton[2], "X->Pinyin");
+    text_layer_set_text(s_menuButton[3], "____________");
+    text_layer_set_text(s_menuButton[4], "Press any key");
+  }
     
     
     //Zurück zum Hauptmenue
-  else{
+  else
+  {
     //Back-Button
     text_layer_set_text(s_menuButton[0], "X->简化字");
     text_layer_set_text(s_menuButton[1], "简化字->X");

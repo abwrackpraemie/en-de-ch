@@ -12,7 +12,7 @@ int i_vocCount = 0;       //Vokabeln zaehlen
 int i_vocScore = 0;       //Richtige Vokabeln
 char c_score[7] = "Score: ";  //Score Text Teil 1
 char c_vocScore[14];          //Score Text (gesamt) ******** geht nur mit >13
-char c_genVoc[2][30][25];     //Ablage der anzuzeigenden Vokabeln
+char c_genVoc[3][30][25];     //Ablage der anzuzeigenden Vokabeln
 int i_limit = 10;
 int i_false = 0;
 int i_randStart23A = 0;      //erste Koordinate zur Bestimmung der Zufallszahlen
@@ -24,11 +24,12 @@ int i_randStart3B = 0;
 int i_randN = 3;           //Zufallszahlbereich
 int i_random3temp = -1;    //Zufallzahl zur Buttonvergabe
 int i_inMenu = 99;
+int i_finalScore = 0;
 
 
 
 
-int i_vocModeQ(int i_inMenu)  //0 == DE; 1== Sym; 2 == Frei; 3 == Frei
+int i_vocModeQ(int i_inMenu)  //0 == DE; 1== Sym; 2 == Pinyin; 3 == Frei
 {
     switch(i_inMenu)
      {
@@ -42,7 +43,7 @@ int i_vocModeQ(int i_inMenu)  //0 == DE; 1== Sym; 2 == Frei; 3 == Frei
         return 0;
         break;
       case 3 :
-        return 1;
+        return 2;
         break;
      }
   return 0;
@@ -59,7 +60,7 @@ int i_vocModeA(int i_inMenu)  //0 == DE; 1== Sym; 2 == Frei; 3 == Frei
         return 0;
         break;
       case 2 :
-        return 1;
+        return 2;
         break;
       case 3 :
         return 0;
@@ -159,7 +160,7 @@ int i_random28()
 
 
 
-//Augabe einer Zufallszahl zwischen 0 und i_randN
+//Augabe einer Zufallszahl zwischen 0 und i_randN **************************************
 int i_random0(int i_randN)
 {
   time_t t;
@@ -183,7 +184,7 @@ int i_random1(int i_randN)
 
 
 
-//Pruefen einer Vokabel auf Richtigkeit  
+//Pruefen einer Vokabel auf Richtigkeit **************************************
 bool b_vocCheck(int i_buttonID, int i_inMenu)
 {
   //wenn richtig, i_vocScore++
@@ -231,6 +232,7 @@ bool b_vocCheck(int i_buttonID, int i_inMenu)
   //Weiter oder Ende
   if(i_vocCount == i_limit)
   {
+    i_finalScore = i_vocScore;
     i_vocCount = 0;
     i_vocScore = 0;   
     //Wechsel zu Hauptmenue
@@ -243,7 +245,7 @@ bool b_vocCheck(int i_buttonID, int i_inMenu)
 
 
 
-//Vokabelliste erstellen
+//Vokabelliste erstellen **************************************
 void vocMixer(int i_inMenu)
 {
   //i_randStart23B = i_random0(23);   //Zufallszahl zwischen 0 und 23
@@ -260,12 +262,13 @@ void vocMixer(int i_inMenu)
         {
         c_genVoc[0][i][j] = 0;
         c_genVoc[1][i][j] = 0;
+        c_genVoc[2][i][j] = 0;
         }
     }
   //int i_randTemp23;
   int i_randTemp28;
   
-  for(int i=0; i<23; i++)
+  for(int i=0; i<28; i++)
   {
     
     //i_randTemp23 = i_random23();
@@ -277,8 +280,9 @@ void vocMixer(int i_inMenu)
     {
       //c_genVoc[0][i][j] = c3_list1[3][i_randTemp23][j]; //Vokabel
       //c_genVoc[1][i][j] = c3_list1[2][i_randTemp23][j]; //Loesung
-      c_genVoc[0][i][j] = c3_list2[3][i_randTemp28][j]; //Vokabel
-      c_genVoc[1][i][j] = c3_list2[2][i_randTemp28][j]; //Loesung
+      c_genVoc[0][i][j] = c3_list2[3][i_randTemp28][j]; //Deutsch
+      c_genVoc[1][i][j] = c3_list2[2][i_randTemp28][j]; //Schriftzeichen
+      c_genVoc[2][i][j] = c3_list2[1][i_randTemp28][j]; //Pinyin
     }
   }
   
@@ -297,7 +301,7 @@ void vocMixer(int i_inMenu)
   {
     if(i_random3temp == i)
     {
-      text_layer_set_text(s_menuButton[i],c_genVoc[i_vocModeA(i_inMenu)][0]);
+      text_layer_set_text(s_menuButton[i],c_genVoc[i_vocModeA(i_inMenu)][i_vocCount]);
     }
     else
     {
@@ -306,7 +310,7 @@ void vocMixer(int i_inMenu)
     }
   }
   //Vokabel initialisieren
-  text_layer_set_text(s_menuButton[0],c_genVoc[i_inMenu][0]);
+  text_layer_set_text(s_menuButton[0],c_genVoc[i_vocModeQ(i_inMenu)][i_vocCount]);
   //Score initialisieren
   text_layer_set_text_alignment(s_menuButton[4], GTextAlignmentCenter);
   text_layer_set_text(s_menuButton[4], "Score: 0");
@@ -315,7 +319,22 @@ void vocMixer(int i_inMenu)
 }
 
 
+//Statistik am Ende jeder Modi **************************************
+void getScore() 
+{
+  char c_getScore[14] = "Right: NN";
+  char c_right[7] = "Right: ";
+  snprintf(c_getScore, sizeof(c_getScore), "%s%i", c_right, i_finalScore);
+  text_layer_set_text(s_menuButton[1], c_getScore);
+}
 
+void getOverall()
+{
+  char c_getOverall[14] = "Wrong: NN";
+  char c_wrong[7] = "Wrong: ";
+  snprintf(c_getOverall, sizeof(c_getOverall), "%s%i", c_wrong, i_limit-i_finalScore);
+  text_layer_set_text(s_menuButton[2], c_getOverall);
+}
 
 
 #endif /* LOGIC_H */

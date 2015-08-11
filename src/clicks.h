@@ -21,11 +21,17 @@ void up_click_handler(ClickRecognizerRef recognizer, void *context)
   //Vokabelmodus: Up-Taste fuer Auswahl
   if(i_inMenu < 4){
     bool b_finished = b_vocCheck(i_buttonID, i_inMenu);
-    //Wechsel ins Hauptmenue, wenn fertig
-    if(b_finished == 1)
-    {
-      menu_change(99);
+    //Score ausgeben (mit Menü 11)
+    if(b_finished == 1){
+      i_selected = 11;
+      menu_change(i_selected);
     }
+  }
+  
+  //Scoremenü nach Ende
+  else if(i_inMenu == 11){
+    //Wechsel von Scoremenue ins Hauptmenue, wenn fertig
+    menu_change(99);
   }
   
   //Menuemodus: Up-Taste fuer Navigation
@@ -59,11 +65,18 @@ void down_click_handler(ClickRecognizerRef recognizer, void *context)
   //Vokabelmodus: Down-Taste fuer Auswahl
   if(i_inMenu < 4){
     bool b_finished = b_vocCheck(i_buttonID, i_inMenu);
-    //Wechsel ins Hauptmenue, wenn fertig
+    //Score ausgeben (mit Menü 11)
     if(b_finished == 1){
-      menu_change(99);
+      i_selected = 11;
+      menu_change(i_selected);
     }
   } 
+  
+  //Scoremenü nach Ende
+  else if(i_inMenu == 11){
+    //Wechsel von Scoremenue ins Hauptmenue, wenn fertig
+    menu_change(99);
+  }
   
   //Menuemodus: Down-Taste fuer Navigation
   else{
@@ -95,10 +108,17 @@ void select_click_handler(ClickRecognizerRef recognizer, void *context)
   //Vokabelmodus: Select-Taste fuer Auswahl
   if(i_inMenu < 4){
     bool b_finished = b_vocCheck(i_buttonID, i_inMenu);
-    //Wechsel ins Hauptmenue, wenn fertig
+    //Score ausgeben (mit Menü 11)
     if(b_finished == 1){
-      menu_change(99);
+      i_selected = 11;
+      menu_change(i_selected);
     }
+  } 
+  
+  //Score Menü nach Ende
+  else if(i_inMenu == 11){
+    //Wechsel von Scoremenue ins Hauptmenue, wenn fertig
+    menu_change(99);
   }
   
   //Auswahl nach i_inMenu prüfen
