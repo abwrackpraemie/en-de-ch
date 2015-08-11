@@ -52,9 +52,9 @@ char c3_list2[4][28][25] =
       //"可以","来","请","请问","认识","问","先生","姓"
     },
     {
-      "Land","Lehrer","das (da/dort)","welche","Mensch","wer","sein","China","Grossm. vaeterl.","Sie",
-      "Grossm. muetterl.","Fremdsprache","Arzt","dies (hier)","glücklich","(höflich NN erfragen)","heißen","eintreten","hereinkommen","Journalist",
-      "können","kommen","bitten","darf ich fragen","jmd. kennen","fragen","Herr"
+      "Land","Lehrer","das (da/dort)","welche","Mensch","wer","sein","China","Großm. väterl.","Sie",
+      "Großm. mütterl.","Fremdsprache","Arzt","dies (hier)","glücklich","(höflich NN erfragen)","heißen","eintreten","hereinkommen","Journalist",
+      "können","kommen","bitten","darf ich fragen","jmd. kennen","fragen","Herr","mit NN heißen"
     }
   };
 
