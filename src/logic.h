@@ -17,6 +17,8 @@ int i_limit = 10;
 int i_false = 0;
 int i_randStart23A = 0;      //erste Koordinate zur Bestimmung der Zufallszahlen
 int i_randStart23B = 0;      //zweite Koordinate zur Bestimmung der Zufallszahlen
+int i_randStart28A = 0;
+int i_randStart28B = 0;
 int i_randStart3A = 0;
 int i_randStart3B = 0;
 int i_randN = 3;           //Zufallszahlbereich
@@ -127,6 +129,36 @@ int i_random23()
 
 
 
+//Ausgabe einer vorab generierten Zufallszahl der Reihe nach im Bereich von 0 bis 27
+int i_random28()
+{
+  //naechsten Wert ausgeben
+  if(i_randStart28B == 27)
+  {
+    i_randStart28B = 0;
+  }
+  else
+  {
+    i_randStart28B++;
+  }
+  //Liste an Zufallszahlen (keine doppelten)
+  int i_28list[8][28] = 
+  {
+    {16, 2, 3, 24, 1, 14, 10, 25, 17, 9, 5, 20, 12, 4, 23, 27, 26, 15, 21, 6, 22, 19, 18, 8, 11, 13, 0, 7 },
+    {2, 17, 1, 18, 16, 15, 11, 4, 22, 21, 9, 25, 23, 12, 27, 8, 24, 26, 7, 14, 6, 13, 3, 5, 10, 19, 20, 0 },
+    {12, 2, 10, 22, 4, 17, 3, 16, 0, 1, 11, 13, 19, 20, 14, 21, 26, 27, 6, 9, 24, 23, 7, 25, 5, 18, 15, 8 },
+    {24, 13, 23, 3, 27, 9, 25, 1, 8, 18, 11, 0, 5, 17, 7, 4, 14, 2, 15, 12, 16, 21, 20, 6, 10, 26, 19, 22 },
+    {2, 4, 7, 26, 0, 3, 15, 22, 13, 12, 14, 9, 20, 27, 17, 23, 25, 21, 1, 5, 24, 6, 10, 11, 19, 8, 16, 18 },
+    {13, 22, 23, 3, 0, 12, 5, 6, 18, 21, 16, 8, 2, 26, 27, 19, 1, 20, 17, 24, 11, 9, 15, 14, 10, 25, 4, 7 },
+    {4, 24, 9, 11, 7, 21, 13, 1, 8, 6, 12, 16, 3, 23, 2, 0, 19, 15, 14, 18, 22, 20, 25, 26, 10, 17, 5, 27 },
+    {11, 21, 6, 27, 0, 15, 14, 26, 5, 19, 1, 16, 7, 22, 25, 3, 2, 4, 23, 18, 17, 13, 24, 9, 10, 8, 20, 12 },
+  };
+  //gibt Zahl in Reihe i_randstartA und Spalte i_randStartB aus
+  return i_28list[i_randStart28A][i_randStart28B];
+}
+
+
+
 //Augabe einer Zufallszahl zwischen 0 und i_randN
 int i_random0(int i_randN)
 {
@@ -214,9 +246,10 @@ bool b_vocCheck(int i_buttonID, int i_inMenu)
 //Vokabelliste erstellen
 void vocMixer(int i_inMenu)
 {
-  i_randStart23B = i_random0(23);   //Zufallszahl zwischen 0 und 23
-  i_randStart23A = i_random0(8);    //Zufallszahl zwischen 0 und 8
-
+  //i_randStart23B = i_random0(23);   //Zufallszahl zwischen 0 und 23
+  //i_randStart23A = i_random0(8);    //Zufallszahl zwischen 0 und 8
+  i_randStart28B = i_random0(28);   //Zufallszahl zwischen 0 und 28
+  i_randStart28A = i_random0(8);    //Zufallszahl zwischen 0 und 8
   //Vokabeln nach Schwierigkeitsgrad auswaehlen ***
   //Vokabeln aussuchen
   
@@ -229,21 +262,23 @@ void vocMixer(int i_inMenu)
         c_genVoc[1][i][j] = 0;
         }
     }
-  int i_randTemp23;
-  //Vokabeln mit 1 markieren (10 Vokabeln werden gesucht)
-
+  //int i_randTemp23;
+  int i_randTemp28;
   
   for(int i=0; i<23; i++)
   {
     
-    i_randTemp23 = i_random23();
+    //i_randTemp23 = i_random23();
+    i_randTemp28 = i_random28();
     
     //markiere freie Vokabel 
     
     for(int j = 0; j<25; j++)
     {
-      c_genVoc[0][i][j] = c3_list1[3][i_randTemp23][j]; //Vokabel
-      c_genVoc[1][i][j] = c3_list1[2][i_randTemp23][j]; //Loesung
+      //c_genVoc[0][i][j] = c3_list1[3][i_randTemp23][j]; //Vokabel
+      //c_genVoc[1][i][j] = c3_list1[2][i_randTemp23][j]; //Loesung
+      c_genVoc[0][i][j] = c3_list2[3][i_randTemp28][j]; //Vokabel
+      c_genVoc[1][i][j] = c3_list2[2][i_randTemp28][j]; //Loesung
     }
   }
   
@@ -252,9 +287,12 @@ void vocMixer(int i_inMenu)
   //Vokabelliste initialisieren
   //Antwortmoeglichkeiten generieren
 
-  i_randStart3B = i_random0(23);   //Zufallszahl zwischen 0 und 23
+  //i_randStart3B = i_random0(23);   //Zufallszahl zwischen 0 und 23
+  //i_randStart3A = i_random0(8);    //Zufallszahl zwischen 0 und 8
+  //i_random3temp = i_random23();    //richtige Antwort
+  i_randStart3B = i_random0(28);   //Zufallszahl zwischen 0 und 23
   i_randStart3A = i_random0(8);    //Zufallszahl zwischen 0 und 8
-  i_random3temp = i_random23();    //richtige Antwort
+  i_random3temp = i_random28();    //richtige Antwort
   for(int i=1; i<4; i++)
   {
     if(i_random3temp == i)
