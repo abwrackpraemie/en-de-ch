@@ -37,7 +37,7 @@ int i_vocMode(int i_inMenu)
         return 1;//j_vocMode = 0;
         break;
       case 2 :
-        return 2
+        return 2;
         break;
       case 3 :
         return 3;
@@ -134,7 +134,7 @@ int i_random1(int i_randN)
 
 
 //Pruefen einer Vokabel auf Richtigkeit  
-bool b_vocCheck(int i_buttonID, int i_inMenu)
+bool b_vocCheck(int i_buttonID)
 {
   //wenn richtig, i_vocScore++
   if(i_random3temp == i_buttonID)
