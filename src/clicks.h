@@ -20,7 +20,7 @@ void up_click_handler(ClickRecognizerRef recognizer, void *context)
   
   //Vokabelmodus: Up-Taste fuer Auswahl
   if(i_inMenu < 4){
-    bool b_finished = b_vocCheck(i_buttonID);
+    bool b_finished = b_vocCheck(i_buttonID, i_inMenu);
     //Wechsel ins Hauptmenue, wenn fertig
     if(b_finished == 1)
     {
@@ -58,7 +58,7 @@ void down_click_handler(ClickRecognizerRef recognizer, void *context)
   
   //Vokabelmodus: Down-Taste fuer Auswahl
   if(i_inMenu < 4){
-    bool b_finished = b_vocCheck(i_buttonID);
+    bool b_finished = b_vocCheck(i_buttonID, i_inMenu);
     //Wechsel ins Hauptmenue, wenn fertig
     if(b_finished == 1){
       menu_change(99);
@@ -94,7 +94,7 @@ void select_click_handler(ClickRecognizerRef recognizer, void *context)
   
   //Vokabelmodus: Select-Taste fuer Auswahl
   if(i_inMenu < 4){
-    bool b_finished = b_vocCheck(i_buttonID);
+    bool b_finished = b_vocCheck(i_buttonID, i_inMenu);
     //Wechsel ins Hauptmenue, wenn fertig
     if(b_finished == 1){
       menu_change(99);

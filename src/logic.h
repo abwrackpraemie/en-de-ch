@@ -26,27 +26,45 @@ int i_inMenu = 99;
 
 
 
-int i_vocMode(int i_inMenu)
+int i_vocModeQ(int i_inMenu)  //0 == DE; 1== Sym; 2 == Frei; 3 == Frei
 {
     switch(i_inMenu)
      {
       case 0 :
-        return 0;//j_vocMode = 1;
+        return 0;
         break;
       case 1 :
-        return 1;//j_vocMode = 0;
+        return 1;
         break;
       case 2 :
-        return 2;
+        return 0;
         break;
       case 3 :
-        return 3;
+        return 1;
         break;
      }
   return 0;
 }
 
-
+int i_vocModeA(int i_inMenu)  //0 == DE; 1== Sym; 2 == Frei; 3 == Frei
+{
+    switch(i_inMenu)
+     {
+      case 0 :
+        return 1;
+        break;
+      case 1 :
+        return 0;
+        break;
+      case 2 :
+        return 1;
+        break;
+      case 3 :
+        return 0;
+        break;
+     }
+  return 0;
+}
 
 
 //Ausgabe einer vorab generierten Zufallszahl der Reihe nach im Bereich von 1 bis 3
@@ -134,7 +152,7 @@ int i_random1(int i_randN)
 
 
 //Pruefen einer Vokabel auf Richtigkeit  
-bool b_vocCheck(int i_buttonID)
+bool b_vocCheck(int i_buttonID, int i_inMenu)
 {
   //wenn richtig, i_vocScore++
   if(i_random3temp == i_buttonID)
@@ -158,11 +176,11 @@ bool b_vocCheck(int i_buttonID)
     {
       if(i_random3temp == i)
       {
-        text_layer_set_text(s_menuButton[i],c_genVoc[1][i_vocCount]); //i_inMenu = 1 im Modus 1
+        text_layer_set_text(s_menuButton[i],c_genVoc[i_vocModeA(i_inMenu)][i_vocCount]); //i_inMenu = 1 im Modus 1
       }
       else
       {
-        text_layer_set_text(s_menuButton[i],c_genVoc[1][i_false]);    //i_inMenu = 1 im Modus 1
+        text_layer_set_text(s_menuButton[i],c_genVoc[i_vocModeA(i_inMenu)][i_false]);    //i_inMenu = 1 im Modus 1
         if(i_false < 21)
         {
           i_false++;
@@ -174,7 +192,7 @@ bool b_vocCheck(int i_buttonID)
       }
     }
     //Vokabel aktualisieren
-    text_layer_set_text(s_menuButton[0],c_genVoc[0][i_vocCount]); //i_inMenu = 0 im Modus 0
+    text_layer_set_text(s_menuButton[0],c_genVoc[i_vocModeQ(i_inMenu)][i_vocCount]); //i_inMenu = 0 im Modus 0
   }
 
 
@@ -241,16 +259,16 @@ void vocMixer(int i_inMenu)
   {
     if(i_random3temp == i)
     {
-      text_layer_set_text(s_menuButton[i],c_genVoc[1][0]);
+      text_layer_set_text(s_menuButton[i],c_genVoc[i_vocModeA(i_inMenu)][0]);
     }
     else
     {
-      text_layer_set_text(s_menuButton[i],c_genVoc[1][i_false]);
+      text_layer_set_text(s_menuButton[i],c_genVoc[i_vocModeA(i_inMenu)][i_false]);
       i_false++;
     }
   }
   //Vokabel initialisieren
-  text_layer_set_text(s_menuButton[0],c_genVoc[0][0]);
+  text_layer_set_text(s_menuButton[0],c_genVoc[i_inMenu][0]);
   //Score initialisieren
   text_layer_set_text_alignment(s_menuButton[4], GTextAlignmentCenter);
   text_layer_set_text(s_menuButton[4], "Score: 0");

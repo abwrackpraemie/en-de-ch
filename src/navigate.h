@@ -17,6 +17,7 @@ void menu_change(int i_selected){
     switch(i_selected)
       {
       case 0:
+          i_inMenu = i_selected;
           vocMixer(i_inMenu);
          /* text_layer_set_text(s_menuButton[0], "Vokabel");
           text_layer_set_text(s_menuButton[1], "Symbol 1");
@@ -25,16 +26,18 @@ void menu_change(int i_selected){
           text_layer_set_text_alignment(s_menuButton[4], GTextAlignmentCenter);
           text_layer_set_text(s_menuButton[4], "Score: 0");
           text_layer_set_text(s_menuButton[i_random3temp],c3_list1[2][0]);*/
-          i_inMenu = i_selected;
+          
         break;
       case 1:
-          text_layer_set_text(s_menuButton[0], "Symbol");
+          i_inMenu = i_selected;
+          vocMixer(i_inMenu);
+          /*text_layer_set_text(s_menuButton[0], "Symbol");
           text_layer_set_text(s_menuButton[1], "Vokabel 1");
           text_layer_set_text(s_menuButton[2], "Vokabel 2");
           text_layer_set_text(s_menuButton[3], "Vokabel 3");
           text_layer_set_text_alignment(s_menuButton[4], GTextAlignmentCenter);
-          text_layer_set_text(s_menuButton[4], "Score: 0");
-          i_inMenu = i_selected;
+          text_layer_set_text(s_menuButton[4], "Score: 0");*/
+
         break;
       case 2:
           text_layer_set_text(s_menuButton[0], "Vokabel");
